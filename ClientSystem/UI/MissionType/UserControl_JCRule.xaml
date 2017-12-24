@@ -17,7 +17,7 @@
             <ColumnDefinition Width="30"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Text="{Binding Converter={StaticResource MissionValue_Value}, Mode=OneWay}"/>
+        <TextBlock Text="{Binding Converter={StaticResource MissionValue_Value}, Mode=OneWay}" VerticalAlignment="Center"/>
         <Button Command="{Binding Path=Rule.JCRule.ExJCRule.Command_JCRule_Down}" CommandParameter="{Binding}" Grid.Column="1" Style="{StaticResource MaterialDesignFloatingActionAccentButton}" Height="Auto" Width="Auto" >
             <materialDesign:PackIcon Kind="Check" VerticalAlignment="Center" HorizontalAlignment="Center" />
         </Button>

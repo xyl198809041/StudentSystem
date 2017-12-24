@@ -12,9 +12,73 @@ namespace DataSystem.DB
 {
     public static class ExClass
     {
-        private static readonly DateTime StartTime = DateTime.Parse("8:00:00");
-        private static readonly DateTime EndTime = DateTime.Parse("16:00:00");
+        private static readonly TimeSpan StartTime = TimeSpan.Parse("8:00:00");
+        private static readonly TimeSpan EndTime = TimeSpan.Parse("16:00:00");
 
+        ///// <summary>
+        ///// 距离现在少小时
+        ///// 基本测试通过
+        ///// </summary>
+        ///// <param name="from"></param>
+        ///// <returns></returns>
+        //public static double ToNewTime(this DateTime From)
+        //{
+        //    DateTime from = From;
+        //    DateTime to = DateTime.Now;
+        //    if (to.TimeOfDay > EndTime.TimeOfDay) to = to.Date.Add(EndTime.TimeOfDay);
+        //    if (from.TimeOfDay > EndTime.TimeOfDay) from = from.Date.Add(EndTime.TimeOfDay);
+        //    if (to.TimeOfDay < StartTime.TimeOfDay) to = to.Date.Add(StartTime.TimeOfDay);
+        //    if (from.TimeOfDay < StartTime.TimeOfDay) from = from.Date.Add(StartTime.TimeOfDay);
+
+        //    double TimeHour = (to.TimeOfDay - from.TimeOfDay).TotalHours;
+        //    double DateHour = (to.Date - from.Date).Days * (EndTime - StartTime).TotalHours;
+
+        //    DateTime date = from.Date;
+        //    while (true)
+        //    {
+        //        date = date.AddDays(1);
+        //        if (date.Date >= to.Date) break;
+        //        if (date.DayOfWeek == (DayOfWeek.Saturday | DayOfWeek.Sunday))
+        //        {
+        //            DateHour -= 8;
+        //        }
+        //    }
+        //    if (to.Date == from.Date)
+        //    {
+        //        if (to.Date.DayOfWeek == (DayOfWeek.Saturday | DayOfWeek.Sunday))
+        //        {
+        //            TimeHour -= (to.TimeOfDay - from.TimeOfDay).TotalHours;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        if (to.Date.DayOfWeek == (DayOfWeek.Saturday | DayOfWeek.Sunday)) TimeHour -= (to.TimeOfDay - StartTime.TimeOfDay).TotalHours;
+        //        if (from.Date.DayOfWeek == (DayOfWeek.Saturday | DayOfWeek.Sunday)) TimeHour -= (EndTime.TimeOfDay - from.TimeOfDay).TotalHours;
+        //    }
+
+        //    return DateHour + TimeHour;
+        //}
+
+        /// <summary>
+        /// 获取本周一 ,保留时间部分
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
+        public static DateTime ThisWeekMonday(this DateTime dateTime)
+        {
+            return dateTime.AddDays(Convert.ToInt32(1 - Convert.ToInt32(DateTime.Now.DayOfWeek)));
+        }
+        /// <summary>
+        /// 设置时间部分
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <param name="Hour"></param>
+        /// <param name="Min"></param>
+        /// <returns></returns>
+        public static DateTime AtTime(this DateTime dateTime,double Hour,double Min)
+        {
+            return dateTime.Date.AddHours(Hour).AddMinutes(Min);
+        }
         /// <summary>
         /// 距离现在少小时
         /// 基本测试通过
@@ -25,38 +89,55 @@ namespace DataSystem.DB
         {
             DateTime from = From;
             DateTime to = DateTime.Now;
-            if (to.TimeOfDay > EndTime.TimeOfDay) to = to.Date.Add(EndTime.TimeOfDay);
-            if (from.TimeOfDay > EndTime.TimeOfDay) from = from.Date.Add(EndTime.TimeOfDay);
-            if (to.TimeOfDay < StartTime.TimeOfDay) to = to.Date.Add(StartTime.TimeOfDay);
-            if (from.TimeOfDay < StartTime.TimeOfDay) from = from.Date.Add(StartTime.TimeOfDay);
+            DateTime temp;
+            
+            DateTime ThisWeek1 = DateTime.Now.Date.AddDays(Convert.ToInt32(1 - Convert.ToInt32(DateTime.Now.DayOfWeek)));
 
-            double TimeHour = (to.TimeOfDay - from.TimeOfDay).TotalHours;
-            double DateHour = (to.Date - from.Date).Days * (EndTime - StartTime).TotalHours;
-
-            DateTime date = from.Date;
-            while (true)
+            //周五晚上,周六日
+            if (From.DayOfWeek == (DayOfWeek.Saturday | DayOfWeek.Sunday) || (From.DayOfWeek == DayOfWeek.Friday && From.TimeOfDay > EndTime))
             {
-                date = date.AddDays(1);
-                if (date.Date >= to.Date) break;
-                if (date.DayOfWeek == (DayOfWeek.Saturday | DayOfWeek.Sunday))
-                {
-                    DateHour -= 8;
-                }
+                from = From.ThisWeekMonday().AddDays(7).AtTime(8, 0);
             }
-            if (to.Date == from.Date)
+            //周一到周五
+            else if(From.TimeOfDay<StartTime)
             {
-                if (to.Date.DayOfWeek == (DayOfWeek.Saturday | DayOfWeek.Sunday))
-                {
-                    TimeHour -= (to.TimeOfDay - from.TimeOfDay).TotalHours;
-                }
+                from = From.Date.AtTime(8, 0);
             }
-            else
+            else if (From.TimeOfDay > EndTime)
             {
-                if (to.Date.DayOfWeek == (DayOfWeek.Saturday | DayOfWeek.Sunday)) TimeHour -= (to.TimeOfDay - StartTime.TimeOfDay).TotalHours;
-                if (from.Date.DayOfWeek == (DayOfWeek.Saturday | DayOfWeek.Sunday)) TimeHour -= (EndTime.TimeOfDay - from.TimeOfDay).TotalHours;
+                from = From.Date.AddDays(1).AtTime(8, 0);
             }
 
-            return DateHour + TimeHour;
+            //周六周日
+            if(to.DayOfWeek==(DayOfWeek.Saturday | DayOfWeek.Sunday) )
+            {
+                to = to.ThisWeekMonday().AddDays(4).AtTime(16, 0);
+            }
+            //周一早上
+            else if(to.DayOfWeek == DayOfWeek.Monday && to.TimeOfDay < StartTime)
+            {
+                to = to.ThisWeekMonday().AddDays(-3).AtTime(16, 0);
+            }
+            //周一到周五
+            else if(to.TimeOfDay<StartTime)
+            {
+                to = to.Date.AddDays(-1).AtTime(16, 0);
+            }
+            else if(to.TimeOfDay > EndTime)
+            {
+                to = to.AtTime(16, 0);
+            }
+
+            if (to < from) return 0;
+
+            double Hours = (to - from).TotalHours;
+            temp = from.AddDays(1);
+            while (temp.Date < to)
+            {
+                if (temp.DayOfWeek == (DayOfWeek.Saturday | DayOfWeek.Sunday)) Hours -= 1;
+            }
+
+            return Hours ;
         }
         /// <summary>
         /// 距离现在多少天,当天算0
@@ -523,7 +604,7 @@ namespace DataSystem.DB
                 num = StartNum;
             }
             else
-            {
+            { 
                 num= ((int)((time - Hour) / AddHour)) * AddNum + StartNum;
             }
             if (num.ToString() != (string)msg.ExData[Num])

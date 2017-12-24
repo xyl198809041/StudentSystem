@@ -25,6 +25,9 @@
         
 
     </UserControl.Resources>
+    <UserControl.Effect>
+        <DropShadowEffect Color="White" BlurRadius="5" ShadowDepth="0"/>
+    </UserControl.Effect>
     <UserControl.DataContext>
         <DataSystem:Data/>
     </UserControl.DataContext>

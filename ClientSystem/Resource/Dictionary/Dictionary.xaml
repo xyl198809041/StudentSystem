@@ -13,6 +13,8 @@
     <System:Double x:Key="FontSize_H2">24</System:Double>
     <System:Double x:Key="FontSize_H3">18</System:Double>
 
+
+
     <!--填表标签-->
     <Style TargetType="TextBlock" x:Key="TextBlock_Field">
         <Setter Property="VerticalAlignment" Value="Center"/>
