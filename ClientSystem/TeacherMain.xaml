@@ -1,0 +1,13 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ClientSystem"
+        xmlns:Layout="clr-namespace:ClientSystem.Layout" x:Class="ClientSystem.TeacherMain"
+        mc:Ignorable="d"
+        Title="教师端" Height="600" Width="1000" Closing="Window_Closing">
+
+    <Layout:UserControl_Main/>
+
+</Window>

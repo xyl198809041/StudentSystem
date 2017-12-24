@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="ClientSystem.UI.MissionType.UserControl_AddByTime"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ClientSystem.UI.MissionType"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="30" d:DesignWidth="250">
+    <UserControl.Resources>
+        <local:MissionValue_Value x:Key="MissionValue_Value"/>
+    </UserControl.Resources>
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="220"/>
+            <ColumnDefinition Width="30"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="{Binding Converter={StaticResource MissionValue_Value}, Mode=OneWay}"  />
+        <Button Command="{Binding Path=Rule.JCRule.ExJCRule.Command_JCRule_Down}" CommandParameter="{Binding}" Grid.Column="1" Style="{StaticResource MaterialDesignFloatingActionAccentButton}" Height="Auto" Width="Auto" >
+            <materialDesign:PackIcon Kind="Check" VerticalAlignment="Center" HorizontalAlignment="Center" />
+        </Button>
+    </Grid>
+</UserControl>

@@ -1,0 +1,31 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ClientSystem.UI"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:DataSystem="clr-namespace:DataSystem;assembly=DataSystem" x:Name="userControl" x:Class="ClientSystem.UI.UserControl_SelectStudent"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="200">
+    <UserControl.DataContext>
+        <DataSystem:Data/>
+    </UserControl.DataContext>
+    <md:Card VerticalAlignment="Stretch">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="40"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <ComboBox x:Name="Combobox_StudentList" md:HintAssist.Hint="学生" Margin="5" IsEditable="True" md:HintAssist.HintOpacity=".26" ItemsSource="{Binding StudentList, ElementName=userControl, Mode=OneWay}" KeyUp="Combobox_StudentList_KeyUp" VerticalAlignment="Stretch"/>
+            <Button x:Name="Button_Add" Grid.Column="1" Margin="5" Style="{DynamicResource MaterialDesignFloatingActionAccentButton}" Width="Auto" Height="Auto" Click="Button_Add_Click">
+                <md:PackIcon Kind="Plus" Width="Auto" Height="Auto" />
+            </Button>
+        </Grid>
+    </md:Card>
+
+</UserControl>

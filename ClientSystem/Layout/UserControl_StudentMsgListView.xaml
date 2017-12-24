@@ -1,0 +1,49 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ClientSystem.Layout"
+             xmlns:DataSystem="clr-namespace:DataSystem;assembly=DataSystem" x:Class="ClientSystem.Layout.UserControl_StudentMsgListView"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="200">
+    <UserControl.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/ClientSystem;component/Resource/Dictionary/Dictionary.xaml"/>
+                <ResourceDictionary Source="/ClientSystem;component/Resource/Dictionary/Dictionary_ListView.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <local:Point_Value x:Key="Point_Value"/>
+            <local:SumPoint_Value x:Key="SumPoint_Value"/>
+            <local:StudentMsgList_Value x:Key="StudentMsgList_Value"/>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <UserControl.DataContext>
+        <DataSystem:Data/>
+    </UserControl.DataContext>
+    <Grid>
+        <ListView FontWeight="Bold" FontSize="{DynamicResource FontSize_H3}" Foreground="Black" ItemsSource="{Binding Current.StudentMsgs, Converter={StaticResource StudentMsgList_Value}, Mode=OneWay}" >
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Rule}" Width="170"/>
+                        <TextBlock Text="{Binding Point,Converter={StaticResource Point_Value}}" Width="65"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock>
+                                姓名:<TextBlock Text="{Binding Name}"/>   分数:<TextBlock Text="{Binding Items, Converter={StaticResource SumPoint_Value}}"/>
+                            </TextBlock>
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                </GroupStyle>
+            </ListView.GroupStyle>
+        </ListView>
+    </Grid>
+</UserControl>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="DataServer" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="DataServer" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="DataServer/Imports">
+      <xsd:import schemaLocation="http://localhost:8081/WCF/DataServer.svc?xsd=xsd0" namespace="DataServer" />
+      <xsd:import schemaLocation="http://localhost:8081/WCF/DataServer.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IDataServer_DoWork_InputMessage">
+    <wsdl:part name="parameters" element="tns:DoWork" />
+  </wsdl:message>
+  <wsdl:message name="IDataServer_DoWork_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DoWorkResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDataServer_Login_InputMessage">
+    <wsdl:part name="parameters" element="tns:Login" />
+  </wsdl:message>
+  <wsdl:message name="IDataServer_Login_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDataServer_GetStudentMsgs_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetStudentMsgs" />
+  </wsdl:message>
+  <wsdl:message name="IDataServer_GetStudentMsgs_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetStudentMsgsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDataServer_AddStudentMsg_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddStudentMsg" />
+  </wsdl:message>
+  <wsdl:message name="IDataServer_AddStudentMsg_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddStudentMsgResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDataServer_GetStudents_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetStudents" />
+  </wsdl:message>
+  <wsdl:message name="IDataServer_GetStudents_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetStudentsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDataServer_GetRules_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRules" />
+  </wsdl:message>
+  <wsdl:message name="IDataServer_GetRules_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRulesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDataServer_GetNewMsg_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetNewMsg" />
+  </wsdl:message>
+  <wsdl:message name="IDataServer_GetNewMsg_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetNewMsgResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDataServer_UserActionByJCRule_InputMessage">
+    <wsdl:part name="parameters" element="tns:UserActionByJCRule" />
+  </wsdl:message>
+  <wsdl:message name="IDataServer_UserActionByJCRule_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UserActionByJCRuleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDataServer_GetJCRules_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetJCRules" />
+  </wsdl:message>
+  <wsdl:message name="IDataServer_GetJCRules_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetJCRulesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDataServer_UpdateRule_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateRule" />
+  </wsdl:message>
+  <wsdl:message name="IDataServer_UpdateRule_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateRuleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDataServer_UpDateJCRule_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpDateJCRule" />
+  </wsdl:message>
+  <wsdl:message name="IDataServer_UpDateJCRule_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpDateJCRuleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDataServer_GetStudentSumPoints_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetStudentSumPoints" />
+  </wsdl:message>
+  <wsdl:message name="IDataServer_GetStudentSumPoints_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetStudentSumPointsResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IDataServer">
+    <wsdl:operation name="DoWork">
+      <wsdl:input wsaw:Action="DataServer/IDataServer/DoWork" message="tns:IDataServer_DoWork_InputMessage" />
+      <wsdl:output wsaw:Action="DataServer/IDataServer/DoWorkResponse" message="tns:IDataServer_DoWork_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <wsdl:input wsaw:Action="DataServer/IDataServer/Login" message="tns:IDataServer_Login_InputMessage" />
+      <wsdl:output wsaw:Action="DataServer/IDataServer/LoginResponse" message="tns:IDataServer_Login_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStudentMsgs">
+      <wsdl:input wsaw:Action="DataServer/IDataServer/GetStudentMsgs" message="tns:IDataServer_GetStudentMsgs_InputMessage" />
+      <wsdl:output wsaw:Action="DataServer/IDataServer/GetStudentMsgsResponse" message="tns:IDataServer_GetStudentMsgs_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddStudentMsg">
+      <wsdl:input wsaw:Action="DataServer/IDataServer/AddStudentMsg" message="tns:IDataServer_AddStudentMsg_InputMessage" />
+      <wsdl:output wsaw:Action="DataServer/IDataServer/AddStudentMsgResponse" message="tns:IDataServer_AddStudentMsg_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStudents">
+      <wsdl:input wsaw:Action="DataServer/IDataServer/GetStudents" message="tns:IDataServer_GetStudents_InputMessage" />
+      <wsdl:output wsaw:Action="DataServer/IDataServer/GetStudentsResponse" message="tns:IDataServer_GetStudents_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRules">
+      <wsdl:input wsaw:Action="DataServer/IDataServer/GetRules" message="tns:IDataServer_GetRules_InputMessage" />
+      <wsdl:output wsaw:Action="DataServer/IDataServer/GetRulesResponse" message="tns:IDataServer_GetRules_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetNewMsg">
+      <wsdl:input wsaw:Action="DataServer/IDataServer/GetNewMsg" message="tns:IDataServer_GetNewMsg_InputMessage" />
+      <wsdl:output wsaw:Action="DataServer/IDataServer/GetNewMsgResponse" message="tns:IDataServer_GetNewMsg_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UserActionByJCRule">
+      <wsdl:input wsaw:Action="DataServer/IDataServer/UserActionByJCRule" message="tns:IDataServer_UserActionByJCRule_InputMessage" />
+      <wsdl:output wsaw:Action="DataServer/IDataServer/UserActionByJCRuleResponse" message="tns:IDataServer_UserActionByJCRule_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetJCRules">
+      <wsdl:input wsaw:Action="DataServer/IDataServer/GetJCRules" message="tns:IDataServer_GetJCRules_InputMessage" />
+      <wsdl:output wsaw:Action="DataServer/IDataServer/GetJCRulesResponse" message="tns:IDataServer_GetJCRules_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateRule">
+      <wsdl:input wsaw:Action="DataServer/IDataServer/UpdateRule" message="tns:IDataServer_UpdateRule_InputMessage" />
+      <wsdl:output wsaw:Action="DataServer/IDataServer/UpdateRuleResponse" message="tns:IDataServer_UpdateRule_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpDateJCRule">
+      <wsdl:input wsaw:Action="DataServer/IDataServer/UpDateJCRule" message="tns:IDataServer_UpDateJCRule_InputMessage" />
+      <wsdl:output wsaw:Action="DataServer/IDataServer/UpDateJCRuleResponse" message="tns:IDataServer_UpDateJCRule_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStudentSumPoints">
+      <wsdl:input wsaw:Action="DataServer/IDataServer/GetStudentSumPoints" message="tns:IDataServer_GetStudentSumPoints_InputMessage" />
+      <wsdl:output wsaw:Action="DataServer/IDataServer/GetStudentSumPointsResponse" message="tns:IDataServer_GetStudentSumPoints_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

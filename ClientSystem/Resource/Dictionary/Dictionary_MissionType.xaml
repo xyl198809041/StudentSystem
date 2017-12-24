@@ -1,0 +1,20 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:ClientSystem.Resource.Dictionary"
+                    xmlns:DataSystem="clr-namespace:DataSystem.DB;assembly=DataSystem"
+                    xmlns:UI="clr-namespace:ClientSystem.UI.MissionType"
+                    >
+
+    <DataTemplate DataType="{x:Type DataSystem:ExJCRule_AutoSave}">
+        <UI:UserControl_AutoSave DataContext="{Binding RelativeSource={RelativeSource TemplatedParent},Path=Tag}"/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type DataSystem:ExJCRule}">
+        <UI:UserControl_JCRule DataContext="{Binding RelativeSource={RelativeSource TemplatedParent},Path=Tag}"/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type DataSystem:ExJCRule_AddByTime}">
+        <UI:UserControl_AddByTime DataContext="{Binding RelativeSource={RelativeSource TemplatedParent},Path=Tag}"/>
+    </DataTemplate>
+
+
+
+</ResourceDictionary>
