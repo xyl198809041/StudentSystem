@@ -1,0 +1,42 @@
+﻿
+@model DataSystem.DataByName
+
+@{
+    ViewBag.Title = "QRGet";
+}
+
+
+<h2 class="text-center d-print-none">
+    名单二维码,班级:@Model.Name
+</h2>
+<div class="text-center d-print-none">
+    <button id="Button_Print" type="button" onclick="window.print()" class="btn btn-primary">打印</button>
+</div>
+<p></p>
+@{
+    int Rows = 6;
+    int Cols = 6;
+}
+@{ int i = 0;}
+<div>
+    @while (i < Model.Students.Count)
+    {
+        var RowClass = "row";
+        if (i % Rows == Rows - 1) { RowClass += " NextPage"; }
+        <div class="@RowClass">
+            @for (int Num = 0; Num < Cols; Num++)
+            {
+                <div class="col-2">
+                    <div class="card text-center">
+                        <img style="height:100%;width:100%" src="~/Image/@(Model.Students[i].Id).jpg" />
+                        <h6 class="card-text">姓名:@Model.Students[i].StudentName</h6>
+                        <h6 class="card-text">班级:@Model.Name</h6>
+                    </div>
+                </div>
+            }
+            <div class="w-100" style="height:35px"></div>
+        </div>
+
+        i++;
+    }
+</div>

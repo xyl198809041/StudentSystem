@@ -29,6 +29,15 @@ namespace DataSystem
             return JsonConvert.SerializeObject(obj, serializerSettings);
         }
         /// <summary>
+        /// 序列化用于Web,纯信息
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public static string ToJsonForWeb(this object obj)
+        {
+            return JsonConvert.SerializeObject(obj);
+        }
+        /// <summary>
         /// 反序列化
         /// </summary>
         /// <param name="json"></param>

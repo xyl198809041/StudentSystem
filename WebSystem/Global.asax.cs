@@ -8,6 +8,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using DataSystem.DB;
 using DataSystem;
+using System.IO;
 
 namespace WebSystem
 {
@@ -24,7 +25,7 @@ namespace WebSystem
             //服务器初始化
             AppSet.IsWeb = true;
             var a= DataList.Current;
-
+            
             //a.AddJCRule(new JCRule()
             //{
             //    Tilte="jcrule2",

@@ -135,6 +135,7 @@ namespace DataSystem.DB
             while (temp.Date < to)
             {
                 if (temp.DayOfWeek == (DayOfWeek.Saturday | DayOfWeek.Sunday)) Hours -= 1;
+                temp= temp.AddDays(1);
             }
 
             return Hours ;

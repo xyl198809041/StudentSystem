@@ -18,16 +18,16 @@ namespace DataSystem
 
         #region 系统
         private SystemDataDB _DB;
-        private User _user;
+        private string _Name = "";
 
         /// <summary>
         /// 初始化
         /// </summary>
         /// <param name="user"></param>
         /// <param name="DB"></param>
-        public DataByName(User user, SystemDataDB DB)
+        public DataByName(string Name, SystemDataDB DB)
         {
-            _user = user;
+            _Name = Name;
             _DB = DB;
         }
         /// <summary>
@@ -37,17 +37,7 @@ namespace DataSystem
         {
             get
             {
-                return _user.Name;
-            }
-        }
-        /// <summary>
-        /// 用户名
-        /// </summary>
-        public User User
-        {
-            get
-            {
-                return _user;
+                return _Name;
             }
         }
         /// <summary>
@@ -331,7 +321,7 @@ namespace DataSystem
         /// </summary>
         private void Load()
         {
-            _DB.Users.ToList().ForEach(p =>
+            _DB.Users.GroupBy(p=>p.Name).Select(p=>p.Key).ToList().ForEach(p =>
             {
                 var data = new DataByName(p,_DB);
                 data.Load();
@@ -404,9 +394,12 @@ namespace DataSystem
             {
                 _DB.Users.Add(user);
                 DB_Save();
-                var data = new DataByName(user,_DB);
-                data.Load();
-                Add(data);
+                if (this.Count(p => p.Name == user.Name) == 0)
+                {
+                    var data = new DataByName(user.Name, _DB);
+                    data.Load();
+                    Add(data);
+                }
                 return SystemMsg.Success;
             }
             else return SystemMsg_DB.HaveUser;

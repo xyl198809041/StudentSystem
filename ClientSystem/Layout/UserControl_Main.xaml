@@ -48,7 +48,7 @@
             <!--固定部分-->
             <TextBlock Grid.Column="2" Grid.Row="1" TextWrapping="Wrap" Text="操行分" FontSize="{DynamicResource FontSize_H1}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <TextBlock Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" Text="任务" FontSize="{DynamicResource FontSize_H1}" VerticalAlignment="Center"  HorizontalAlignment="Center"/>
-            <TextBlock Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="3" Text="版本:测试版0.7.12" FontSize="{DynamicResource FontSize_H2}"  VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+            <TextBlock Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="3" Text="版本:测试版0.7.12.26" FontSize="{DynamicResource FontSize_H2}"  VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
             <!--end-->
 
             <!--按钮部分-->
