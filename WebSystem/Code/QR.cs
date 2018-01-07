@@ -44,7 +44,7 @@ namespace WebSystem.Code
         /// <param name="student"></param>
         public static void StudentToQR(this Student student)
         {
-            var img= BarcodeWriter.Write(new { student.Id, student.Name, student.StudentName }.ToJsonForWeb());
+            var img = BarcodeWriter.Write(new { id = student.Id, name = student.Name, studentname = student.StudentName }.ToJsonForWeb());
             img.Save($"{ImagePath}{student.Id}.jpg");
         }
 

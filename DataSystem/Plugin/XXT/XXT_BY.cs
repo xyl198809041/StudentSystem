@@ -58,7 +58,8 @@ namespace DataSystem.Plugin.XXT
                 {
                     {"data",UpdataStr }
                 });
-                bool s = rt.Code == "200";
+                bool s = rt?.Code == "200";
+                if (!s) IsLogin = false;
                 return s;
             }
         }

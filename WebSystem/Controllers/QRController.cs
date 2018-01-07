@@ -21,7 +21,7 @@ namespace WebSystem.Controllers
         {
             if (DataList.Current[Name] == null) Name = DataList.Current[0].Name;
             DataList.Current[Name].Students.ForEach(p => p.StudentToQR());
-            return View("Get",DataList.Current[Name]);
+            return View(DataList.Current[Name]);
         }
     }
 }

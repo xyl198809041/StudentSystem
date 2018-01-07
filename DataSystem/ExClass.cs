@@ -68,7 +68,15 @@ namespace DataSystem
         public static T Post<T>(this HttpClient httpClient,string Url,Dictionary<string,string> Form)
         {
             var rtstr = httpClient.PostAsync(Url, new FormUrlEncodedContent(Form)).Result.Content.ReadAsStringAsync().Result;
-            return JsonConvert.DeserializeObject<T>(rtstr);
+            try
+            {
+                return JsonConvert.DeserializeObject<T>(rtstr);
+
+            }
+            catch
+            {
+                return default(T);
+            }
         }
         /// <summary>
         /// httpclient post

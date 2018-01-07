@@ -221,6 +221,10 @@
       <DependentUpon>DataServer.svc</DependentUpon>
     </Compile>
     <Compile Include="WCF\IDataServer.cs" />
+    <Compile Include="WCF\IServiceAndroid.cs" />
+    <Compile Include="WCF\ServiceAndroid.svc.cs">
+      <DependentUpon>ServiceAndroid.svc</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -295,6 +299,7 @@
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="WCF\DataServer.svc" />
+    <Content Include="WCF\ServiceAndroid.svc" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

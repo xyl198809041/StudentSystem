@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="WebSystem.WCF.ServiceAndroid" CodeBehind="ServiceAndroid.svc.cs" %>
