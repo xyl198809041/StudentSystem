@@ -99,6 +99,22 @@ namespace WebSystem.WCF
         /// <returns></returns>
         [OperationContract]
         string GetStudentSumPoints(string Name);
+        /// <summary>
+        /// 更新设置
+        /// </summary>
+        /// <param name="Name"></param>
+        /// <param name="Property"></param>
+        /// <param name="Value"></param>
+        /// <returns></returns>
+        [OperationContract]
+        bool UpdateSetting(string Name, string Setting);
+        /// <summary>
+        /// 获取设置
+        /// </summary>
+        /// <param name="Name"></param>
+        /// <returns></returns>
+        [OperationContract]
+        string GetSetting(string Name);
     }
     
 }

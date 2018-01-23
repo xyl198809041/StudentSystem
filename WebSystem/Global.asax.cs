@@ -24,7 +24,7 @@ namespace WebSystem
 
             //服务器初始化
             AppSet.IsWeb = true;
-            var a= DataList.Current;
+            var a= DataList.Current; 
             
             //a.AddJCRule(new JCRule()
             //{

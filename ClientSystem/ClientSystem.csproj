@@ -28,7 +28,7 @@
     <InstallUrl>\\10.17.64.253\App\ClientSystem\</InstallUrl>
     <ProductName>学生管理系统</ProductName>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>13</ApplicationRevision>
+    <ApplicationRevision>15</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -140,6 +140,9 @@
     <Compile Include="UI\UserControl_RuleSelect.xaml.cs">
       <DependentUpon>UserControl_RuleSelect.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\UserControl_ScrollingLabel.xaml.cs">
+      <DependentUpon>UserControl_ScrollingLabel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\UserControl_SelectStudent.xaml.cs">
       <DependentUpon>UserControl_SelectStudent.xaml</DependentUpon>
     </Compile>
@@ -239,6 +242,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\UserControl_RuleSelect.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\UserControl_ScrollingLabel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

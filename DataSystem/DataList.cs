@@ -276,6 +276,28 @@ namespace DataSystem
             }).ToList();
         }
 
+        private Setting _Setting;
+        public Setting Setting
+        {
+            get
+            {
+                if (_Setting == null)
+                {
+                    if (DB.Settings.Count(p => p.Name == Name) == 0)
+                    {
+                        Setting setting = new Setting()
+                        {
+                            Name = Name
+                        };
+                        DB.Settings.Add(setting);
+                        DataList.Current.DB_Save();
+                    }
+                    _Setting = DB.Settings.Where(p => p.Name == Name).First();
+                }
+                return _Setting;
+            }
+        }
+
         #endregion
 
 
@@ -324,8 +346,8 @@ namespace DataSystem
             _DB.Users.GroupBy(p=>p.Name).Select(p=>p.Key).ToList().ForEach(p =>
             {
                 var data = new DataByName(p,_DB);
-                data.Load();
                 Add(data);
+                data.Load();
             });
         }
         /// <summary>

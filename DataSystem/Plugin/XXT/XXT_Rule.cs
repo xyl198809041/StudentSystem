@@ -18,7 +18,11 @@ namespace DataSystem.Plugin.XXT
         public static Dictionary<string, Func<XXT_StudentMsg, string>> XXT_BuildDictionary { get; } = new Dictionary<string, Func<XXT_StudentMsg, string>>()
         {
             {"{姓名}",p=>p.StudentMsg.Student.StudentName },
-            {"{分数}",p=>p.StudentMsg.Point.ToString() }
+            {"{分数}",p=>p.StudentMsg.Point.ToString() },
+            {"{日期}",p=>p.StudentMsg.CreateTime.ToHumanDateString() },
+            {"{时间}",p=>p.StudentMsg.CreateTime.ToShortTimeString() },
+            {"{班规}",p=>p.StudentMsg.Rule.ToString() },
+            {"{任务}",p=>p.StudentMsg.Rule.JCRule.ExJCRule.ValueMissionMsg(p.StudentMsg) }
         };
         /// <summary>
         /// 短信频率
@@ -107,11 +111,61 @@ namespace DataSystem.Plugin.XXT
         public XXT_Rule(Rule Rule)
         {
             this.Rule = Rule;
+            this.Rule.PropertyChanged += XXT_Rule_PropertyChanged;
         }
+
+        private void XXT_Rule_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(Rule.JCRule))
+            {
+                NotifyPropertyChanged(nameof(XXT_Rules));
+            }
+        }
+
         /// <summary>
         /// 班规
         /// </summary>
         public Rule Rule { get; private set; }
+        /// <summary>
+        /// 通过班规注册状态获取校讯通规则
+        /// </summary>
+        /// <param name="stateType"></param>
+        /// <returns></returns>
+        private XXT_RuleByStateType GetRuleByStateType(KeyValuePair<StudentMsg.StateType,string> stateType)
+        {
+            XXT_RuleByStateType xXT_RuleByStateType = _XXT_RuleByStateTypeList.Where(p => p.StateType == stateType.Key).FirstOrDefault();
+            if (xXT_RuleByStateType == null)
+            {
+                xXT_RuleByStateType = new XXT_RuleByStateType()
+                {
+                    StateType = stateType.Key,
+                    Name = stateType.Value
+                };
+                _XXT_RuleByStateTypeList.Add(xXT_RuleByStateType);
+            }
+            return xXT_RuleByStateType;
+        }
+
+        private List<XXT_RuleByStateType> ___XXT_RuleByStateTypeList;
+        /// <summary>
+        /// 保存的全部校讯通短信规则数据(如果exJcrule改变,则不显示,但是不删除)
+        /// </summary>
+        private List<XXT_RuleByStateType> _XXT_RuleByStateTypeList
+        {
+            get
+            {
+                if (___XXT_RuleByStateTypeList == null)
+                {
+                    if (!Rule.ExData.ContainsKey(nameof(XXT_Rules)))
+                    {
+                        Rule.ExData.Add(nameof(XXT_Rules), new List<XXT_RuleByStateType>());
+                    }
+                    ___XXT_RuleByStateTypeList = (List<XXT_RuleByStateType>)Rule.ExData[nameof(XXT_Rules)];
+                }
+                return ___XXT_RuleByStateTypeList;
+            }
+        }
+
         /// <summary>
         /// 校讯通规则列表
         /// </summary>
@@ -119,26 +173,22 @@ namespace DataSystem.Plugin.XXT
         {
             get
             {
-                if (!Rule.ExData.ContainsKey(nameof(XXT_Rules)))
-                {
-                    var list = new List<XXT_RuleByStateType>();
-                    Rule.JCRule.ExJCRule.StateTypes.ToList().ForEach(p =>
-                    {
-                        list.Add(new XXT_RuleByStateType()
-                        {
-                            StateType = p.Key,
-                            Name = p.Value
-                        });
-                    });
-                    Rule.ExData.Add(nameof(XXT_Rules), list);
+                //if (!Rule.ExData.ContainsKey(nameof(XXT_Rules)))
+                //{
+                //    var list = new List<XXT_RuleByStateType>();
+                //    Rule.JCRule.ExJCRule.StateTypes.ToList().ForEach(p =>
+                //    {
+                //        list.Add(new XXT_RuleByStateType()
+                //        {
+                //            StateType = p.Key,
+                //            Name = p.Value
+                //        });
+                //    });
+                //    Rule.ExData.Add(nameof(XXT_Rules), list);
                     
-                }
-                return (List<XXT_RuleByStateType>)Rule.ExData[nameof(XXT_Rules)];
-            }
-            set
-            {
-                Rule.ExData[nameof(XXT_Rules)] = value;
-                NotifyPropertyChanged(nameof(XXT_Rules));
+                //}
+                //return (List<XXT_RuleByStateType>)Rule.ExData[nameof(XXT_Rules)];
+                return Rule.JCRule.ExJCRule.StateTypes.Select(p => GetRuleByStateType(p)).ToList();
             }
         }
         /// <summary>
@@ -148,7 +198,7 @@ namespace DataSystem.Plugin.XXT
         /// <returns></returns>
         public XXT_RuleByStateType GetXXT_RuleByStateType(StudentMsg.StateType stateType)
         {
-            return XXT_Rules.Where(p => p.StateType == stateType).First();
+            return XXT_Rules.Where(p => p.StateType == stateType).FirstOrDefault();
         }
     }
 

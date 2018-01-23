@@ -78,6 +78,18 @@
   <wsdl:message name="IDataServer_GetStudentSumPoints_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetStudentSumPointsResponse" />
   </wsdl:message>
+  <wsdl:message name="IDataServer_UpdateSetting_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateSetting" />
+  </wsdl:message>
+  <wsdl:message name="IDataServer_UpdateSetting_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateSettingResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDataServer_GetSetting_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSetting" />
+  </wsdl:message>
+  <wsdl:message name="IDataServer_GetSetting_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSettingResponse" />
+  </wsdl:message>
   <wsdl:portType name="IDataServer">
     <wsdl:operation name="DoWork">
       <wsdl:input wsaw:Action="DataServer/IDataServer/DoWork" message="tns:IDataServer_DoWork_InputMessage" />
@@ -126,6 +138,14 @@
     <wsdl:operation name="GetStudentSumPoints">
       <wsdl:input wsaw:Action="DataServer/IDataServer/GetStudentSumPoints" message="tns:IDataServer_GetStudentSumPoints_InputMessage" />
       <wsdl:output wsaw:Action="DataServer/IDataServer/GetStudentSumPointsResponse" message="tns:IDataServer_GetStudentSumPoints_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateSetting">
+      <wsdl:input wsaw:Action="DataServer/IDataServer/UpdateSetting" message="tns:IDataServer_UpdateSetting_InputMessage" />
+      <wsdl:output wsaw:Action="DataServer/IDataServer/UpdateSettingResponse" message="tns:IDataServer_UpdateSetting_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSetting">
+      <wsdl:input wsaw:Action="DataServer/IDataServer/GetSetting" message="tns:IDataServer_GetSetting_InputMessage" />
+      <wsdl:output wsaw:Action="DataServer/IDataServer/GetSettingResponse" message="tns:IDataServer_GetSetting_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
 </wsdl:definitions>

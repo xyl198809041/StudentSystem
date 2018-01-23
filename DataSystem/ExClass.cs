@@ -43,7 +43,7 @@ namespace DataSystem
         /// <param name="json"></param>
         /// <returns></returns>
         public static object ToObj(this string json)
-        {
+        {   
             return JsonConvert.DeserializeObject(json, serializerSettings);
         }
         /// <summary>
@@ -96,12 +96,51 @@ namespace DataSystem
 
         #region 时间
 
-        //上周一
-        public static DateTime LastWeek1 { get => DateTime.Now.Date.AddDays(Convert.ToInt32(1 - Convert.ToInt32(DateTime.Now.DayOfWeek)) - 7); }
-        //本周一
-        public static DateTime ThisWeek1
+
+        /// <summary>
+        /// 日期转换为习惯用语
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
+        public static string ToHumanDateString(this DateTime dateTime)
         {
-            get => DateTime.Now.Date.AddDays(Convert.ToInt32(1 - Convert.ToInt32(DateTime.Now.DayOfWeek)));
+            if (dateTime.Date == DateTime.Now.Date)
+            {
+                return "今天";
+            }
+            else if (dateTime.Date == DateTime.Now.Date.AddDays(-1))
+            {
+                return "昨天";
+            }
+            else if (dateTime.Date >= DateTime.Now.ThisWeekMonday())
+            {
+                return "本" + dateTime.ToString("ddd");
+            }
+            else if (dateTime.Date >= DateTime.Now.ThisWeekMonday().AddDays(-7))
+            {
+                return "上" + dateTime.ToString("ddd");
+            }
+            else return dateTime.ToString("MM月dd日,dddd");
+        }
+        /// <summary>
+        /// 设置时间部分
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <param name="Hour"></param>
+        /// <param name="Min"></param>
+        /// <returns></returns>
+        public static DateTime AtTime(this DateTime dateTime, double Hour, double Min)
+        {
+            return dateTime.Date.AddHours(Hour).AddMinutes(Min);
+        }
+        /// <summary>
+        /// 获取本周一 ,保留时间部分
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
+        public static DateTime ThisWeekMonday(this DateTime dateTime)
+        {
+            return dateTime.AddDays(Convert.ToInt32(1 - Convert.ToInt32(DateTime.Now.DayOfWeek)));
         }
         /// <summary>
         /// 当前星期几是否是本月的最后一个星期几

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="a4b515e8-5af9-4683-b60e-81f00ad6a31e" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="5ce88a87-6279-4357-8462-afaa021203a5" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -22,11 +22,11 @@
     <MetadataSource Address="http://localhost:8081/WCF/DataServer.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="DataServer.wsdl" MetadataType="Wsdl" ID="7c8fdd59-4eb9-45fb-9ede-6523b430957a" SourceId="1" SourceUrl="http://localhost:8081/WCF/DataServer.svc?wsdl=wsdl0" />
-    <MetadataFile FileName="DataServer1.wsdl" MetadataType="Wsdl" ID="706df9c6-3c9e-474d-b484-064e7f298f29" SourceId="1" SourceUrl="http://localhost:8081/WCF/DataServer.svc?wsdl" />
-    <MetadataFile FileName="DataServer.xsd" MetadataType="Schema" ID="ecb13625-9f77-4ff9-8688-0fe4d6361437" SourceId="1" SourceUrl="http://localhost:8081/WCF/DataServer.svc?xsd=xsd1" />
-    <MetadataFile FileName="DataServer1.xsd" MetadataType="Schema" ID="cac6e8fa-2a57-47f9-bf42-af7cb54492ef" SourceId="1" SourceUrl="http://localhost:8081/WCF/DataServer.svc?xsd=xsd0" />
-    <MetadataFile FileName="DataServer.disco" MetadataType="Disco" ID="831adee7-3c64-4329-9d0b-d57bacaa3a53" SourceId="1" SourceUrl="http://localhost:8081/WCF/DataServer.svc?disco" />
+    <MetadataFile FileName="DataServer2.wsdl" MetadataType="Wsdl" ID="ad7167ff-8f52-4cde-a055-a09d99fb989f" SourceId="1" SourceUrl="http://localhost:8081/WCF/DataServer.svc?wsdl=wsdl0" />
+    <MetadataFile FileName="DataServer21.wsdl" MetadataType="Wsdl" ID="a6c7d48b-9861-45a6-97c4-6a374f89dd28" SourceId="1" SourceUrl="http://localhost:8081/WCF/DataServer.svc?wsdl" />
+    <MetadataFile FileName="DataServer2.xsd" MetadataType="Schema" ID="4c18396b-100a-4a93-880a-8cee9cc8969f" SourceId="1" SourceUrl="http://localhost:8081/WCF/DataServer.svc?xsd=xsd1" />
+    <MetadataFile FileName="DataServer21.xsd" MetadataType="Schema" ID="522b6f9c-ecf4-4031-b079-8335ab0ffd73" SourceId="1" SourceUrl="http://localhost:8081/WCF/DataServer.svc?xsd=xsd0" />
+    <MetadataFile FileName="DataServer1.disco" MetadataType="Disco" ID="57d17ac0-935b-4489-a338-977e62227b07" SourceId="1" SourceUrl="http://localhost:8081/WCF/DataServer.svc?disco" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

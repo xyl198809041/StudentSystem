@@ -177,6 +177,21 @@ namespace WebSystem.WCF
             return DataList.Current[Name].GetStudentSumPoints().ToJson();
         }
 
+        public bool UpdateSetting(string Name, string Setting)
+        {
+            Setting old = DataList.Current[Name].Setting;
+            Setting New = Setting.ToObj<Setting>();
+            old.ClassAppMsg = New.ClassAppMsg;
+            DataList.Current.DB_Save();
+            ClientList.AddNewMsg(Name, nameof(Data.Setting));
+            return true;
+        }
+
+        public string GetSetting(string Name)
+        {
+            return DataList.Current[Name].Setting.ToJson();
+        }
+
 
         #endregion
 

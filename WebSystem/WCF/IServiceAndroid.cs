@@ -13,6 +13,14 @@ namespace WebSystem.WCF
     {
         [OperationContract]
         void DoWork();
+        /// <summary>
+        /// 登录
+        /// </summary>
+        /// <param name="UserName"></param>
+        /// <param name="Password"></param>
+        /// <returns></returns>
+        [OperationContract]
+        string Login(string UserName, string Password);
 
         /// <summary>
         /// 学生列表

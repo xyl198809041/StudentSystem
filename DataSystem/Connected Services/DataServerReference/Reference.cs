@@ -86,6 +86,18 @@ namespace DataSystem.DataServerReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="DataServer/IDataServer/GetStudentSumPoints", ReplyAction="DataServer/IDataServer/GetStudentSumPointsResponse")]
         System.Threading.Tasks.Task<string> GetStudentSumPointsAsync(string Name);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="DataServer/IDataServer/UpdateSetting", ReplyAction="DataServer/IDataServer/UpdateSettingResponse")]
+        bool UpdateSetting(string Name, string Setting);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="DataServer/IDataServer/UpdateSetting", ReplyAction="DataServer/IDataServer/UpdateSettingResponse")]
+        System.Threading.Tasks.Task<bool> UpdateSettingAsync(string Name, string Setting);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="DataServer/IDataServer/GetSetting", ReplyAction="DataServer/IDataServer/GetSettingResponse")]
+        string GetSetting(string Name);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="DataServer/IDataServer/GetSetting", ReplyAction="DataServer/IDataServer/GetSettingResponse")]
+        System.Threading.Tasks.Task<string> GetSettingAsync(string Name);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -209,6 +221,22 @@ namespace DataSystem.DataServerReference {
         
         public System.Threading.Tasks.Task<string> GetStudentSumPointsAsync(string Name) {
             return base.Channel.GetStudentSumPointsAsync(Name);
+        }
+        
+        public bool UpdateSetting(string Name, string Setting) {
+            return base.Channel.UpdateSetting(Name, Setting);
+        }
+        
+        public System.Threading.Tasks.Task<bool> UpdateSettingAsync(string Name, string Setting) {
+            return base.Channel.UpdateSettingAsync(Name, Setting);
+        }
+        
+        public string GetSetting(string Name) {
+            return base.Channel.GetSetting(Name);
+        }
+        
+        public System.Threading.Tasks.Task<string> GetSettingAsync(string Name) {
+            return base.Channel.GetSettingAsync(Name);
         }
     }
 }

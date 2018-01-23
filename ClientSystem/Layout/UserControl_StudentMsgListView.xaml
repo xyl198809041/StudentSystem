@@ -14,6 +14,7 @@
                 <ResourceDictionary Source="/ClientSystem;component/Resource/Dictionary/Dictionary.xaml"/>
                 <ResourceDictionary Source="/ClientSystem;component/Resource/Dictionary/Dictionary_ListView.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <local:StudentMsgTip_Vaule x:Key="StudentMsgTip_Vaule"/>
             <local:Point_Value x:Key="Point_Value"/>
             <local:SumPoint_Value x:Key="SumPoint_Value"/>
             <local:StudentMsgList_Value x:Key="StudentMsgList_Value"/>
@@ -27,9 +28,10 @@
         <ListView FontWeight="Bold" FontSize="{DynamicResource FontSize_H3}" Foreground="Black" ItemsSource="{Binding Current.StudentMsgs, Converter={StaticResource StudentMsgList_Value}, Mode=OneWay}" >
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Rule}" Width="170"/>
-                        <TextBlock Text="{Binding Point,Converter={StaticResource Point_Value}}" Width="65"/>
+                    <StackPanel ToolTip="{Binding Converter={StaticResource StudentMsgTip_Vaule}, Mode=OneWay}" Orientation="Horizontal">
+                        <TextBlock Text="{Binding Rule}" Width="160"/>
+                        <TextBlock Text="{Binding Point,Converter={StaticResource Point_Value}}" Width="60"/>
+                        <Button Margin="4,0,0,0" Style="{StaticResource MaterialDesignFloatingActionAccentButton}" Content="X" Command="{Binding Rule.JCRule.ExJCRule.Command_JCRule_SystemDel}" CommandParameter="{Binding}" Width="20" Height="20"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

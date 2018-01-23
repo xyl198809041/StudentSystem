@@ -15,6 +15,10 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/ClientSystem;component/Resource/Dictionary/Dictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <local:SumPointBySumPoint_Value x:Key="SumPointBySumPoint_Value"/>
+            <local:SumPointByThisWeek_Value x:Key="SumPointByThisWeek_Value"/>
+            <local:SumPointByLastWeek_Value x:Key="SumPointByLastWeek_Value"/>
+            <local:Visibility_Value x:Key="Visibility_Value"/>
             <Style TargetType="{x:Type Button}" x:Key="Button_OpenWin" BasedOn="{StaticResource MaterialDesignFloatingActionAccentButton}">
                 <Setter Property="Margin" Value="5"/>
                 <Setter Property="Width" Value="Auto"/>
@@ -62,8 +66,21 @@
 
             </StackPanel>
             <!--end-->
-
-
+            
+            <!--小东西-->
+            <UI:UserControl_ScrollingLabel Margin="8" Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding Current.Setting.ClassAppMsg,Mode=OneWay}" FontSize="{StaticResource FontSize_H1}"/>
+            <md:Card Visibility="{Binding Current.User.IsTeacher, Converter={StaticResource Visibility_Value}, Mode=OneWay}" Margin="8" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="300">
+                <StackPanel>
+                    <TextBlock Margin="8" Text="滚动显示:" FontSize="{StaticResource FontSize_H2}"/>
+                    <TextBox Margin="8" Text="{Binding Current.Setting.ClassAppMsg,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" FontSize="{StaticResource FontSize_H2}"/>
+                    <Button x:Name="Button_UpdateClassAppMsg" Click="Button_UpdateClassAppMsg_Click"  Margin="8" HorizontalAlignment="Left">提交</Button>
+                </StackPanel>
+            </md:Card>
+            
+            <!--end-->
+            
+            <!--控件-->
+            
             <local:UserControl_MissionList Grid.Column="1" Grid.Row="2"/>
 
             <TabControl FontSize="{StaticResource FontSize_H3}" Background="{x:Null}"  Grid.Column="2" Grid.Row="2" TabStripPlacement="Bottom" BorderBrush="{x:Null}">
@@ -71,7 +88,7 @@
                     <local:UserControl_StudentMsgListView/>
                 </TabItem>
                 <TabItem Header="本周">
-                    <ListView ItemsSource="{Binding Current.StudentSumPoints, Mode=OneWay}">
+                    <ListView ItemsSource="{Binding Current.StudentSumPoints, Converter={StaticResource SumPointByThisWeek_Value}, Mode=OneWay}">
                         <ListView.ItemTemplate>
                             <DataTemplate DataType="{x:Type DB:StudentSumPoint}">
                                 <StackPanel Orientation="Horizontal">
@@ -86,7 +103,7 @@
                     </ListView>
                 </TabItem>
                 <TabItem Header="上周">
-                    <ListView ItemsSource="{Binding Current.StudentSumPoints, Mode=OneWay}">
+                    <ListView ItemsSource="{Binding Current.StudentSumPoints, Converter={StaticResource SumPointByLastWeek_Value}, Mode=OneWay}">
                         <ListView.ItemTemplate>
                             <DataTemplate DataType="{x:Type DB:StudentSumPoint}">
                                 <StackPanel Orientation="Horizontal">
@@ -101,7 +118,7 @@
                     </ListView>
                 </TabItem>
                 <TabItem Header="总分">
-                    <ListView ItemsSource="{Binding Current.StudentSumPoints, Mode=OneWay}">
+                    <ListView ItemsSource="{Binding Current.StudentSumPoints, Converter={StaticResource SumPointBySumPoint_Value}, Mode=OneWay}">
                         <ListView.ItemTemplate>
                             <DataTemplate DataType="{x:Type DB:StudentSumPoint}">
                                 <StackPanel Orientation="Horizontal">
@@ -116,8 +133,9 @@
                     </ListView>
                 </TabItem>
             </TabControl>
-
+            <!--end-->
         </Grid>
+        
     </md:DialogHost>
 
 </UserControl>

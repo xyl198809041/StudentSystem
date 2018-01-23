@@ -48,9 +48,14 @@ namespace DataSystem.DB
         /// </summary>
         public DbSet<StudentMsg> StudentMsgs { get; set; }
         /// <summary>
+        /// 设置(每个Name一个)
+        /// </summary>
+        public DbSet<Setting> Settings { get; set; }
+        /// <summary>
         /// 短信发送记录
         /// </summary>
         public DbSet<Plugin.XXT.SendMsgInfo> SendMsgInfos { get; set; }
+
     }
 
     public interface IDataModel
@@ -177,7 +182,7 @@ namespace DataSystem.DB
         /// <summary>
         /// 用户名
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; set; } = "";
         /// <summary>
         /// 用户名
         /// </summary>
@@ -193,6 +198,13 @@ namespace DataSystem.DB
         /// 角色
         /// </summary>
         public UserRole Role { get; set; } = UserRole.Student;
+
+        /// <summary>
+        /// 是否拥有Teacher及以上权限
+        /// </summary>
+        [NotMapped]
+        [JsonIgnore]
+        public bool IsTeacher { get => (int)Role >= (int)UserRole.Teacher; }
     }
 
     public class Student:ModelBase
@@ -465,7 +477,26 @@ namespace DataSystem.DB
     }
 
 
+    public class Setting : ModelBase
+    {
 
+        private string _ClassAppMsg = "测试";
+        /// <summary>
+        /// 软件显示消息
+        /// </summary>
+        public string ClassAppMsg
+        {
+            get { return _ClassAppMsg; }
+            set
+            {
+                _ClassAppMsg = value;
+                NotifyPropertyChanged(nameof(ClassAppMsg));
+            }
+        }
+
+
+
+    }
 
 
 }

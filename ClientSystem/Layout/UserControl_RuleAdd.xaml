@@ -129,7 +129,7 @@
                                                         <StackPanel Margin="4">
                                                             
                                                             <TextBlock Style="{StaticResource TextBlock_Field}">短信关键词:</TextBlock>
-                                                            <ListView Tag="{Binding}" ItemsSource="{Binding Source={x:Static XXT:ExClass.XXT_BuildDictionary}}" MinWidth="250" >
+                                                            <ListView Tag="{Binding}" ItemsSource="{Binding Source={x:Static XXT:ExClass.XXT_BuildDictionary}}" MinWidth="250" ScrollViewer.HorizontalScrollBarVisibility="Disabled" >
                                                                 <ListView.ItemTemplate>
                                                                     <DataTemplate>
                                                                         <Button Tag="{Binding Path=Tag,RelativeSource={RelativeSource AncestorType={x:Type ListView}}}" x:Name="Button_AddSMSTextkey" Click="Button_AddSMSTextkey_Click" Content="{Binding Key}"/>

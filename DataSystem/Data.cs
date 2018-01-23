@@ -117,7 +117,7 @@ namespace DataSystem
             StudentMsgs= new ObservableCollection<StudentMsg>(DataServer.GetStudentMsgs(Name).ToObj<List<StudentMsg>>());
             JCRules = new ObservableCollection<JCRule>(DataServer.GetJCRules(Name).ToObj<List<JCRule>>());
             StudentSumPoints = DataServer.GetStudentSumPoints(Name).ToObj<List<StudentSumPoint>>();
-
+            Setting = DataServer.GetSetting(Name).ToObj<Setting>();
             //end
 
             //插件初始化()
@@ -142,9 +142,16 @@ namespace DataSystem
             });
             RegWebDataProperty.Add(nameof(Data.JCRules), obj =>
             {
-                return new ObservableCollection<JCRule>(ExClass.ToObj<List<JCRule>>(DataServer.GetJCRules(Name)));
+                //return new ObservableCollection<JCRule>(ExClass.ToObj<List<JCRule>>(DataServer.GetJCRules(Name)));
+                return new ObservableCollection<JCRule>(DataServer.GetJCRules(Name).ToObj<List<JCRule>>());
             });
-
+            RegWebDataProperty.Add(nameof(Setting), obj =>
+            {
+                Setting setting = (Setting)obj;
+                Setting New = DataServer.GetSetting(Name).ToObj<Setting>();
+                setting.ClassAppMsg = New.ClassAppMsg;
+                return null;
+            });
             //end
 
 
@@ -338,6 +345,29 @@ namespace DataSystem
         }
 
 
+        private Setting _Setting = new Setting();
+        /// <summary>
+        /// 设置
+        /// </summary>
+        public Setting Setting
+        {
+            get { return _Setting; }
+            set
+            {
+                _Setting = value;
+                NotifyPropertyChanged(nameof(Setting));
+            }
+        }
+        /// <summary>
+        /// 保存Setting
+        /// </summary>
+        /// <returns></returns>
+        public Task<bool> SaveSetting()
+        {
+            var rt = DataServer.UpdateSettingAsync(Name, Setting.ToJson());
+            //Setting = null;
+            return rt;
+        }
 
         #endregion
     }

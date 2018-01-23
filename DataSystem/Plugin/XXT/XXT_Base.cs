@@ -56,7 +56,7 @@ namespace DataSystem.Plugin.XXT
             //短信生成任务
             FluentScheduler.JobManager.AddJob(BuildSMSEveryDay, p => p.ToRunEvery(1).Days().At(17, 45));
             //FluentScheduler.JobManager.AddJob(BuildSMSEveryWeek, p => p.ToRunEvery(1).Weeks().On(DayOfWeek.Friday).At(17, 45));
-            
+
         }
         /// <summary>
         /// 检查短信列表中未发送短信,并发送
@@ -111,7 +111,7 @@ namespace DataSystem.Plugin.XXT
         /// </summary>
         public IEnumerable<XXT_StudentMsg> XXT_StudentMsg
         {
-            get => DataList.Current[Name].StudentMsgs.Select(p => new XXT_StudentMsg(p)).Where(p => p.XXT_Rule.GetXXT_RuleByStateType(p.StudentMsg.State).XXT_isNeedSend);
+            get => DataList.Current[Name].StudentMsgs.Select(p => new XXT_StudentMsg(p)).Where(p => p.XXT_Rule.GetXXT_RuleByStateType(p.StudentMsg.State)?.XXT_isNeedSend ?? false);
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace DataSystem.Plugin.XXT
         /// </summary>
         private void BuildSMSEveryDay()
         {
-            lock (DataList.Current[Name].StudentMsgs)
+            lock (DataList.Current)
             {
 
                 var MsgListByStudent = XXT_StudentMsg.GroupBy(p => p.StudentMsg.Student).Where(p => DataList.Current[Name].PluginManager.SendMsgInfo_CheckHave(p.Key, SendSMSEvery.Once));

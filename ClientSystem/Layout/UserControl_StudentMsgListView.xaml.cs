@@ -1,4 +1,5 @@
-﻿using DataSystem.DB;
+﻿using DataSystem;
+using DataSystem.DB;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -75,7 +76,23 @@ namespace ClientSystem.Layout
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return "分数:" + value;
+            return "分:" + value;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class StudentMsgTip_Vaule : IValueConverter
+    {
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            StudentMsg msg = (StudentMsg)value;
+            DateTime t = msg.CreateTime;
+            return "创建时间：" + t.ToHumanDateString() + "," + t.ToShortTimeString();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

@@ -59,26 +59,8 @@ namespace DataSystem.DB
         //    return DateHour + TimeHour;
         //}
 
-        /// <summary>
-        /// 获取本周一 ,保留时间部分
-        /// </summary>
-        /// <param name="dateTime"></param>
-        /// <returns></returns>
-        public static DateTime ThisWeekMonday(this DateTime dateTime)
-        {
-            return dateTime.AddDays(Convert.ToInt32(1 - Convert.ToInt32(DateTime.Now.DayOfWeek)));
-        }
-        /// <summary>
-        /// 设置时间部分
-        /// </summary>
-        /// <param name="dateTime"></param>
-        /// <param name="Hour"></param>
-        /// <param name="Min"></param>
-        /// <returns></returns>
-        public static DateTime AtTime(this DateTime dateTime,double Hour,double Min)
-        {
-            return dateTime.Date.AddHours(Hour).AddMinutes(Min);
-        }
+
+
         /// <summary>
         /// 距离现在少小时
         /// 基本测试通过
@@ -90,8 +72,7 @@ namespace DataSystem.DB
             DateTime from = From;
             DateTime to = DateTime.Now;
             DateTime temp;
-            
-            DateTime ThisWeek1 = DateTime.Now.Date.AddDays(Convert.ToInt32(1 - Convert.ToInt32(DateTime.Now.DayOfWeek)));
+
 
             //周五晚上,周六日
             if (From.DayOfWeek == (DayOfWeek.Saturday | DayOfWeek.Sunday) || (From.DayOfWeek == DayOfWeek.Friday && From.TimeOfDay > EndTime))
@@ -99,7 +80,7 @@ namespace DataSystem.DB
                 from = From.ThisWeekMonday().AddDays(7).AtTime(8, 0);
             }
             //周一到周五
-            else if(From.TimeOfDay<StartTime)
+            else if (From.TimeOfDay < StartTime)
             {
                 from = From.Date.AtTime(8, 0);
             }
@@ -109,36 +90,37 @@ namespace DataSystem.DB
             }
 
             //周六周日
-            if(to.DayOfWeek==(DayOfWeek.Saturday | DayOfWeek.Sunday) )
+            if (to.DayOfWeek == (DayOfWeek.Saturday | DayOfWeek.Sunday))
             {
                 to = to.ThisWeekMonday().AddDays(4).AtTime(16, 0);
             }
             //周一早上
-            else if(to.DayOfWeek == DayOfWeek.Monday && to.TimeOfDay < StartTime)
+            else if (to.DayOfWeek == DayOfWeek.Monday && to.TimeOfDay < StartTime)
             {
                 to = to.ThisWeekMonday().AddDays(-3).AtTime(16, 0);
             }
             //周一到周五
-            else if(to.TimeOfDay<StartTime)
+            else if (to.TimeOfDay < StartTime)
             {
                 to = to.Date.AddDays(-1).AtTime(16, 0);
             }
-            else if(to.TimeOfDay > EndTime)
+            else if (to.TimeOfDay > EndTime)
             {
                 to = to.AtTime(16, 0);
             }
 
             if (to < from) return 0;
 
-            double Hours = (to - from).TotalHours;
+            double Hours = (to - from).TotalHours - (to.Date - from.Date).TotalDays * 16;
+
             temp = from.AddDays(1);
             while (temp.Date < to)
             {
-                if (temp.DayOfWeek == (DayOfWeek.Saturday | DayOfWeek.Sunday)) Hours -= 1;
-                temp= temp.AddDays(1);
+                if (temp.DayOfWeek == (DayOfWeek.Saturday | DayOfWeek.Sunday)) Hours -= 8;
+                temp = temp.AddDays(1);
             }
 
-            return Hours ;
+            return Hours;
         }
         /// <summary>
         /// 距离现在多少天,当天算0
@@ -147,12 +129,12 @@ namespace DataSystem.DB
         /// <returns></returns>
         public static double ToNewDay(this DateTime From)
         {
-            return (DateTime.Now.Date - From.Date).Days;
+            return (DateTime.Now.AddMinutes(10).Date - From.Date).Days;
         }
 
-        public static void UserRunJCRule(this JCRule jcrule,StudentMsg msg,string cmd,Action<StudentMsg> action)
+        public static void UserRunJCRule(this JCRule jcrule, StudentMsg msg, string cmd, Action<StudentMsg> action)
         {
-            
+
         }
     }
 
@@ -163,7 +145,7 @@ namespace DataSystem.DB
     public class JCRule : ModelBase
     {
 
-        private string _JCRuleType= typeof(ExJCRule).FullName;
+        private string _JCRuleType = typeof(ExJCRule).FullName;
         /// <summary>
         /// 规则的类型,记录数据库
         /// </summary>
@@ -208,7 +190,7 @@ namespace DataSystem.DB
                 NotifyPropertyChanged(nameof(Tilte));
             }
         }
-        
+
         /// <summary>
         /// 是否包含任务
         /// </summary>
@@ -282,7 +264,7 @@ namespace DataSystem.DB
     /// <summary>
     /// 模板定义
     /// </summary>
-    public class ExJCRule:IExJCRule
+    public class ExJCRule : IExJCRule
     {
         public ExJCRule() { throw new Exception(); }
 
@@ -354,13 +336,14 @@ namespace DataSystem.DB
         /// <summary>
         /// 自动完成
         /// </summary>
-        public ICommand _Command_JCRule_Down = new DelegateCommand<StudentMsg>((msg) =>
+        private ICommand _Command_JCRule_Down = new DelegateCommand<StudentMsg>((msg) =>
         {
             CommandRun((m) =>
             {
                 m.SetStateType(StudentMsg.StateType.MissionDone);
             }, nameof(Command_JCRule_Down), msg);
         });
+
         /// <summary>
         /// 自动完成
         /// </summary>
@@ -372,26 +355,46 @@ namespace DataSystem.DB
             }
         }
 
+        private ICommand _Command_JCRule_SystemDel = new DelegateCommand<StudentMsg>((msg) =>
+          {
+              CommandRun((m) =>
+              {
+                  m.SetStateType(StudentMsg.StateType.DelMsg);
+              }, nameof(Command_JCRule_SystemDel), msg);
+          });
+
+        public ICommand Command_JCRule_SystemDel { get => _Command_JCRule_SystemDel; }
+
         public virtual void UserRun(StudentMsg msg, string CommandName)
         {
 
         }
-
+        protected Dictionary<StudentMsg.StateType, string> _StateTypes;
         /// <summary>
         /// 状态种类
         /// </summary>
         [JsonIgnore]
         [NotMapped]
-        public virtual Dictionary<StudentMsg.StateType, string> StateTypes { get; } = new Dictionary<StudentMsg.StateType, string>()
+        public virtual Dictionary<StudentMsg.StateType, string> StateTypes
         {
-            {StudentMsg.StateType.Value,"创建" },
-            {StudentMsg.StateType.MissionDone,"完成" }
-        };
+            get
+            {
+                if (_StateTypes == null)
+                {
+                    _StateTypes = new Dictionary<StudentMsg.StateType, string>()
+                    {
+                        {StudentMsg.StateType.Value,"创建" },
+                        {StudentMsg.StateType.MissionDone,"完成" }
+                    };
+                }
+                return _StateTypes;
+            }
+        }
     }
     /// <summary>
     /// 定时完成规则
     /// </summary>
-    public class ExJCRule_AutoSave :ExJCRule,IExJCRule
+    public class ExJCRule_AutoSave : ExJCRule, IExJCRule
     {
         public enum TimeMode
         {
@@ -399,7 +402,7 @@ namespace DataSystem.DB
             Day = 1
         }
 
-        public ExJCRule_AutoSave():base() { }
+        public ExJCRule_AutoSave() : base() { }
         public ExJCRule_AutoSave(JCRule jCRule) : base(jCRule) { }
 
         /// <summary>
@@ -471,9 +474,9 @@ namespace DataSystem.DB
             }
             else if (AutoSave_TimeMode == TimeMode.Day)
             {
-                if(msg.State==StudentMsg.StateType.Value && Day <= msg.CreateTime.ToNewDay())
+                if (msg.State == StudentMsg.StateType.Value && Day <= msg.CreateTime.ToNewDay())
                 {
-                    msg.SetStateType(StudentMsg.StateType.MissionDone);
+                    msg.SetStateType(StudentMsg.StateType.Save);
                     save = true;
                 }
             }
@@ -488,6 +491,8 @@ namespace DataSystem.DB
     /// </summary>
     public class ExJCRule_AddByTime : ExJCRule, IExJCRule
     {
+
+
         public ExJCRule_AddByTime() : base() { }
 
         public ExJCRule_AddByTime(JCRule jCRule) : base(jCRule) { }
@@ -496,9 +501,11 @@ namespace DataSystem.DB
         {
             get
             {
-                var list = base.StateTypes;
-                list.Add(StudentMsg.StateType.MissionOutTime, "超时");
-                return list;
+                if (_StateTypes == null)
+                {
+                    base.StateTypes.Add(StudentMsg.StateType.MissionOutTime, "超时");
+                }
+                return base.StateTypes;
             }
         }
 
@@ -598,15 +605,15 @@ namespace DataSystem.DB
 
         public bool SetNum(StudentMsg msg)
         {
-            double time= msg.CreateTime.ToNewTime();
+            double time = msg.CreateTime.ToNewTime();
             int num;
             if (time < Hour)
             {
                 num = StartNum;
             }
             else
-            { 
-                num= ((int)((time - Hour) / AddHour)) * AddNum + StartNum;
+            {
+                num = ((int)((time - Hour) / AddHour)) * AddNum + StartNum;
             }
             if (num.ToString() != (string)msg.ExData[Num])
             {
@@ -618,13 +625,13 @@ namespace DataSystem.DB
 
         public override bool Run(StudentMsg msg)
         {
-            var save= base.Run(msg);
+            var save = base.Run(msg);
             if (!msg.ExData.ContainsKey(Num))
             {
                 msg.ExData.Add(Num, "");
             }
             save = SetNum(msg);
-            if(msg.State==StudentMsg.StateType.Value && msg.CreateTime.ToNewTime() > Hour)
+            if (msg.State == StudentMsg.StateType.Value && msg.CreateTime.ToNewTime() > Hour)
             {
                 msg.SetStateType(StudentMsg.StateType.MissionOutTime);
                 save = true;

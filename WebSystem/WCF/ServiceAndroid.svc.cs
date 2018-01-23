@@ -19,6 +19,12 @@ namespace WebSystem.WCF
         {
         }
 
+        public string Login(string UserName,string Password)
+        {
+            User user = DataList.Current.Login(UserName, Password);
+            return user.Name;
+        }
+
         public string Students(string Name)
         {
             if (DataList.Current.Count(p => p.Name == Name) == 0) return "";
