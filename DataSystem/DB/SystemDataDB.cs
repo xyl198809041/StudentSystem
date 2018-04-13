@@ -55,6 +55,16 @@ namespace DataSystem.DB
         /// 短信发送记录
         /// </summary>
         public DbSet<Plugin.XXT.SendMsgInfo> SendMsgInfos { get; set; }
+        /// <summary>
+        /// 考试成绩数据
+        /// </summary>
+        public DbSet<TestPoint> TestPoints { get; set; }
+
+        /// <summary>
+        /// 考试信息设置
+        /// 需要设置的信息填在这里
+        /// </summary>
+        public DbSet<TestSet> TestSets { get; set; }
 
     }
 
@@ -498,5 +508,74 @@ namespace DataSystem.DB
 
     }
 
+    /// <summary>
+    /// 考试成绩
+    /// 不作为归属，实时统计使用
+    /// </summary>
+    public class TestPoint
+    {
+        /// <summary>
+        /// id
+        /// </summary>
+        public Guid Id { get; set; } = new Guid();
 
+        /// <summary>
+        /// 姓名
+        /// </summary>
+        [MaxLength(255)]
+        public string StudentName { get; set; }
+        /// <summary>
+        /// 班级
+        /// </summary>
+        public int Class { get; set; }
+        /// <summary>
+        /// 数学成绩
+        /// </summary>
+        public double ShuXue_Point { get; set; }
+        
+        public double YuWen_Point { get; set; }
+        
+        public double YingYu_Point { get; set; }
+        
+        public double KeXue_Point { get; set; }
+        
+        public double SiZheng_Point { get; set; }
+        /// <summary>
+        /// 导入统一id
+        /// </summary>
+        public Guid TestSetId { get; set; }
+        /// <summary>
+        /// 考试相关设置
+        /// </summary>
+        [ForeignKey(nameof(TestSetId))]
+        public TestSet TestSet { get; set; }
+    }
+
+    public class TestSet
+    {
+
+        public Guid Id { get; set; }
+        /// <summary>
+        /// 考试
+        /// </summary>
+        public List<TestPoint> TestPoints { get; set; }
+
+        /// <summary>
+        /// 年级
+        /// </summary>
+        public int Grade { get; set; }
+        /// <summary>
+        /// 考试年份
+        /// </summary>
+        public int Year { get; set; }
+        /// <summary>
+        /// 考试月份
+        /// </summary>
+        public int Month { get; set; }
+        /// <summary>
+        /// 考试名称
+        /// </summary>
+        [MaxLength(255)]
+        public string TestName { get; set; }
+    }
 }
